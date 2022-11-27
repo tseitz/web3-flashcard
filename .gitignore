@@ -9,6 +9,14 @@ app/package
 
 # foundry
 /target
-contracts/out/
 out.json
 contracts/broadcast
+
+# Compiler files
+cache/
+contracts/out/
+
+# Ignores development broadcast logs
+!/contracts/broadcast
+contracts/broadcast/*/31337/
+contracts/broadcast/**/dry-run/

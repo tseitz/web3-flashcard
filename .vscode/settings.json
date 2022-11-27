@@ -1,0 +1,5 @@
+// {
+//   "solidity.remappings": [
+//     "forge-std/=contracts/lib/forge-std/src/"
+//   ]
+// }
