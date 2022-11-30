@@ -5,9 +5,7 @@ contract FlashCard {
     string public prompt;
     string public answer;
 
-    function saveCard(string calldata inPrompt, string calldata inAnswer)
-        public
-    {
+    function saveCard(string calldata inPrompt, string calldata inAnswer) public {
         prompt = inPrompt;
         answer = inAnswer;
     }

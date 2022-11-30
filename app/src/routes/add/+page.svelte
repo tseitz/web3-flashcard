@@ -1,10 +1,18 @@
 <script lang="ts">
+  import { contracts } from 'svelte-ethers-store';
+
 	let prompt: string;
   let answer: string;
 
+  $: flashCard = $contracts.flashcard;
+
   function saveCard() {
     console.log(prompt, answer)
+
+    flashCard.saveCard(prompt, answer)
   }
+
+  $: console.log(flashCard);
 </script>
 
 <div class="form-control">
