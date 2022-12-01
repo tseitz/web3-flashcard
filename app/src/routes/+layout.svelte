@@ -7,7 +7,7 @@
   import { onMount } from 'svelte';
   import type { LayoutData } from './$types';
 
-  import { defaultEvmStores, provider, signer, contracts } from 'svelte-ethers-store';
+  import { defaultEvmStores, provider, signer } from 'svelte-ethers-store';
   // import Web3Modal from 'web3modal';
 
   import Header from '$lib/header/Header.svelte';
@@ -56,7 +56,7 @@
 
 			defaultEvmStores.attachContract(
 				'flashcard',
-				'0x5fbdb2315678afecb367f032d93f642f64180aa3',
+				'0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
 				JSON.stringify(flashCard)
 			);
 

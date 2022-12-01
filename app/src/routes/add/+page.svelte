@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { contracts } from 'svelte-ethers-store';
+  import { contracts, signerAddress } from 'svelte-ethers-store';
 
 	let prompt: string;
   let answer: string;
@@ -10,6 +10,15 @@
     console.log(prompt, answer)
 
     flashCard.saveCard(prompt, answer)
+  }
+
+  async function getCardsByOwner() {
+    console.log($signerAddress)
+    console.log(await flashCard.getCardsByOwner($signerAddress))
+  }
+
+  async function getCardById() {
+    console.log(await flashCard.getCardById(0))
   }
 
   $: console.log(flashCard);
@@ -30,3 +39,7 @@
 </div>
 
 <button class="btn btn-primary" on:click={() => saveCard()}>Save</button>
+
+<button class="btn btn-secondary" on:click={() => getCardsByOwner()}>Get My Card Ids</button>
+
+<button class="btn btn-success" on:click={() => getCardById()}>Get First Card</button>
