@@ -52,11 +52,9 @@
 			const balance = await $signer.getBalance();
 			console.log('balance', balance.toBigInt());
 
-      console.log(JSON.stringify(flashCard))
-
 			defaultEvmStores.attachContract(
 				'flashcard',
-				'0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+				'0x5FC8d32690cc91D4c39d9d3abcBD16989F875707',
 				JSON.stringify(flashCard)
 			);
 
@@ -70,7 +68,9 @@
 
 <Header {pending} {connect} />
 
-<slot />
+<div class="container mx-auto p-4">
+  <slot />
+</div>
 
 <div class="btm-nav">
   <button class="text-primary" class:active={$page.url.pathname === '/'} on:click={() => navigate('/')}>

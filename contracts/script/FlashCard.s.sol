@@ -7,6 +7,7 @@ contract FlashCardScript is Script {
     function setUp() public {}
 
     function run() public {
+        console.log("running");
         vm.broadcast();
     }
 }

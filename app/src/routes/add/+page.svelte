@@ -1,24 +1,23 @@
 <script lang="ts">
   import { contracts, signerAddress } from 'svelte-ethers-store';
 
+  let category: string;
 	let prompt: string;
   let answer: string;
 
   $: flashCard = $contracts.flashcard;
 
-  function saveCard() {
-    console.log(prompt, answer)
+  async function saveCard() {
+    console.log(category, prompt, answer)
 
-    flashCard.saveCard(prompt, answer)
+    await flashCard.saveCard(category, prompt, answer)
+    category = '';
+    prompt = '';
+    answer = '';
   }
 
   async function getCardsByOwner() {
-    console.log($signerAddress)
     console.log(await flashCard.getCardsByOwner($signerAddress))
-  }
-
-  async function getCardById() {
-    console.log(await flashCard.getCardById(0))
   }
 
   $: console.log(flashCard);
@@ -26,20 +25,31 @@
 
 <div class="form-control">
   <label class="label" for="prompt">
+    <span class="label-text">Category</span>
+  </label> 
+  <input type="text" placeholder="Category..." class="input input-bordered input-primary w-full max-w-xs" bind:value={category}/>
+</div>
+
+<div class="form-control">
+  <label class="label" for="prompt">
     <span class="label-text">Question/Prompt</span>
   </label> 
-  <textarea id="prompt" class="textarea textarea-bordered h-24" placeholder="I want to learn..." bind:value={prompt}></textarea>
+  <textarea id="prompt" placeholder="I want to learn..." class="textarea textarea-bordered textarea-primary h-24" bind:value={prompt}></textarea>
 </div>
 
 <div class="form-control">
   <label class="label" for="answer">
     <span class="label-text">Answer</span>
   </label> 
-  <textarea id="answer" class="textarea textarea-bordered h-24" placeholder="So much knowledge..." bind:value={answer}></textarea>
+  <textarea id="answer" placeholder="So much knowledge..." class="textarea textarea-bordered textarea-primary h-24" bind:value={answer}></textarea>
 </div>
 
-<button class="btn btn-primary" on:click={() => saveCard()}>Save</button>
+<div class="py-4">
+  <button class="btn btn-primary" on:click={() => saveCard()}>Save</button>
+  
+  <button class="btn btn-secondary" on:click={() => getCardsByOwner()}>Get My Cards</button>
+  
+  <!-- <button class="btn btn-success" on:click={() => getCardById()}>Get First Card</button>
 
-<button class="btn btn-secondary" on:click={() => getCardsByOwner()}>Get My Card Ids</button>
-
-<button class="btn btn-success" on:click={() => getCardById()}>Get First Card</button>
+  <button class="btn btn-success" on:click={() => getCards()}>Get All Cards</button> -->
+</div>
