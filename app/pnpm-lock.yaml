@@ -10,6 +10,7 @@ specifiers:
   eslint: ^8.30.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-svelte3: ^4.0.0
+  ethers: ^5.7.2
   postcss: ^8.4.20
   prettier: ^2.8.1
   prettier-plugin-svelte: ^2.9.0
@@ -25,6 +26,7 @@ specifiers:
 
 dependencies:
   daisyui: 2.45.0_r4gnkvssmvyxmi2wmat5xbx36a
+  ethers: 5.7.2
   svelte-ethers-store: 2.5.8
 
 devDependencies:

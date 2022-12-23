@@ -1,0 +1,17 @@
+Routing
+
++page.svelte - rendered on both server and client
+
++page.ts - loads data and renders on server and client. PageLoad
+
++page.server.ts - loads data and only ran on server (good for environment variables). PageServerLoad
+
++error - fallback anytime an error in loading
+
++layout.svelte - static layout
+
++layout.ts - loads data for layout. LayoutLoad
+
++layout.server.ts - loads data for layout on server. Function type LayoutServerLoad
+
++server - custom api routes using GET, POST, PATCH, PUT, DELETE
