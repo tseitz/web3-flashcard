@@ -1,30 +1,19 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	// import { contracts, signerAddress } from 'svelte-ethers-store';
+	import { contract } from '../../stores/contract.store';
 
-	// let category: string;
-	// let prompt: string;
-	// let answer: string;
+	async function saveCard(event) {
+		const data = new FormData(this);
 
-	// $: flashCard = $contracts.flashcard;
-
-	// async function saveCard() {
-	//   console.log(category, prompt, answer)
-
-	//   await flashCard.saveCard(category, prompt, answer)
-	//   category = '';
-	//   prompt = '';
-	//   answer = '';
-	// }
-
-	// async function getCardsByOwner() {
-	//   console.log(await flashCard.getCardsByOwner($signerAddress))
-	// }
-
-	// $: console.log(flashCard);
+		const result = await $contract?.saveCard(
+			data.get('category'),
+			data.get('prompt'),
+			data.get('answer')
+		);
+		console.log(result);
+	}
 </script>
 
-<form method="POST" use:enhance>
+<form method="POST" on:submit|preventDefault={saveCard}>
 	<div class="form-control">
 		<label class="label" for="category">
 			<span class="label-text">Category</span>

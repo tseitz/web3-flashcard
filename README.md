@@ -29,3 +29,9 @@ Paste contract address into +layout.svelte
 Get ABI of contract
 
 `forge inspect src/FlashCard.sol:FlashCard abi --extra-output-files abi > ../app/src/abis/FlashCard.json`
+
+## Random Details
+
+All chain data is read from the back-end since it uses the default provider. Front-end handles the wallet signer and interacts with the contract via the signer.
+
+I try to do as much server rendering as possible, data loading etc. Updates are handled on front-end.

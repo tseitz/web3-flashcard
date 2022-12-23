@@ -1,11 +1,4 @@
-import {
-	writable,
-	readable,
-	derived,
-	type Readable,
-	type Subscriber,
-	type Writable
-} from 'svelte/store';
+import { writable, derived, type Subscriber, type Writable } from 'svelte/store';
 import { ethers } from 'ethers';
 import flashCard from '../abis/FlashCard.json';
 
@@ -17,16 +10,16 @@ import flashCard from '../abis/FlashCard.json';
 // 	}
 // );
 
-export const provider: Writable<ethers.providers.JsonRpcProvider> = writable();
+export const provider: Writable<ethers.providers.JsonRpcProvider | null> = writable();
 
 export const contract = derived(provider, (values, set: Subscriber<ethers.Contract | null>) => {
 	if (values !== null) {
-		console.log('setting contract');
+		console.log('setting contract', values);
 		set(
 			new ethers.Contract(
 				'0x5FbDB2315678afecb367f032d93F642f64180aa3',
 				JSON.stringify(flashCard),
-				values
+				values.getSigner()
 			)
 		);
 	}

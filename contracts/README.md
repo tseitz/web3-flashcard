@@ -6,10 +6,10 @@ Get the ABI of a Contract
 forge inspect src/FlashCard.sol:FlashCard abi
 ```
 
-Run a local node
+Run a local node. Metamask like 1337, was getting errors otherwise.
 
 ```bash
-anvil
+anvil --chain-id 1337
 ```
 
 Format Code
