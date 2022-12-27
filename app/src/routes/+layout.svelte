@@ -1,10 +1,11 @@
 <script lang="ts">
-	import '../app.css';
+	import '$fc-root/app.css';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
 	import Header from '$lib/header/Header.svelte';
-	import '../app.css';
+	import '$fc-root/app.css';
+	import { provider } from '$fc-stores/contract.store';
 
 	function navigate(route: string) {
 		goto(route);
@@ -58,24 +59,26 @@
 			/>
 		</svg>
 	</button>
-	<button
-		class="text-primary"
-		class:active={$page.url.pathname === '/study'}
-		on:click={() => navigate('/study')}
-	>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			class="h-8 w-8"
-			fill="none"
-			viewBox="0 0 24 24"
-			stroke="currentColor"
+	{#await $provider?.getSigner().getAddress() then address}
+		<button
+			class="text-primary"
+			class:active={$page.url.pathname === '/study'}
+			on:click={() => navigate(`/study/${address}`)}
 		>
-			<path
-				d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"
-			/>
-			<path
-				d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"
-			/>
-		</svg>
-	</button>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="h-8 w-8"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+			>
+				<path
+					d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"
+				/>
+				<path
+					d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"
+				/>
+			</svg>
+		</button>
+	{/await}
 </div>

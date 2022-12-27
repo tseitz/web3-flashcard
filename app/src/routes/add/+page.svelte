@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { contract } from '../../stores/contract.store';
+	import { contract } from '$fc-stores/contract.store';
 
-	async function saveCard(event) {
+	async function saveCard() {
 		const data = new FormData(this);
 
 		const result = await $contract?.saveCard(
@@ -9,7 +9,10 @@
 			data.get('prompt'),
 			data.get('answer')
 		);
-		console.log(result);
+
+		if (result.confirmations > 0) {
+			this.reset();
+		}
 	}
 </script>
 

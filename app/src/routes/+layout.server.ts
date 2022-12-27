@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import type { LayoutServerLoad } from './$types';
-import flashCard from '../abis/FlashCard.json';
+import flashCard from '$fc-abis/FlashCard.json';
 
 export const load = (() => {
 	const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
@@ -10,9 +10,9 @@ export const load = (() => {
 		provider
 	);
 
-	contract.getCardsByOwner('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266').then(function (result) {
-		console.log(result);
-	});
+	// contract.getCardsByOwner('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266').then(function (result) {
+	// 	console.log(result);
+	// });
 
 	return {};
 }) satisfies LayoutServerLoad;

@@ -1,6 +1,6 @@
 import { writable, derived, type Subscriber, type Writable } from 'svelte/store';
 import { ethers } from 'ethers';
-import flashCard from '../abis/FlashCard.json';
+import flashCard from '$fc-abis/FlashCard.json';
 
 // export const provider: Readable<ethers.providers.JsonRpcProvider | null> = readable(
 // 	null,

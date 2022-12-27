@@ -8,7 +8,13 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		alias: {
+			'$fc-root': './src',
+			'$fc-types': './src/types',
+			'$fc-stores': './src/stores',
+			'$fc-abis': './src/abis'
+		}
 	}
 };
 

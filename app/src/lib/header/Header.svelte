@@ -3,13 +3,13 @@
 	import { ethers } from 'ethers';
 
 	import ConnectButton from './ConnectButton.svelte';
-	import { provider } from '../../stores/contract.store';
+	import { provider } from '$fc-stores/contract.store';
 
 	let pending = false;
 
 	onMount(async () => {
 		if (window.ethereum) {
-			console.log('window.ethereum found. connecting...', window.ethereum);
+			console.log('window.ethereum found. connecting...');
 			await connect();
 		}
 	});
