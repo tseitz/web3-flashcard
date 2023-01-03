@@ -5,6 +5,7 @@ export class Card {
 	category: string;
 	prompt: string;
 	answer: string;
+	imageUrl = '';
 
 	constructor(cardData: PickedCard) {
 		this.id = parseInt(cardData.id.toString(), 10);

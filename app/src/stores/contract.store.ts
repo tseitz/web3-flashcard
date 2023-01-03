@@ -13,7 +13,7 @@ import flashCard from '$fc-abis/FlashCard.json';
 export const provider: Writable<ethers.providers.JsonRpcProvider | null> = writable();
 
 export const contract = derived(provider, (values, set: Subscriber<ethers.Contract | null>) => {
-	if (values !== null) {
+	if (values !== null && values !== undefined) {
 		console.log('setting contract', values);
 		set(
 			new ethers.Contract(

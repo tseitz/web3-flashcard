@@ -62,7 +62,7 @@
 	{#await $provider?.getSigner().getAddress() then address}
 		<button
 			class="text-primary"
-			class:active={$page.url.pathname === '/study'}
+			class:active={$page.url.pathname.includes('/study')}
 			on:click={() => navigate(`/study/${address}`)}
 		>
 			<svg

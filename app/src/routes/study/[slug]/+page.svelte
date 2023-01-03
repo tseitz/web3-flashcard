@@ -1,19 +1,55 @@
 <script lang="ts">
-	import type { Card } from '$fc-types';
-	import type { PageData } from './$types';
-
-	export let data: PageData;
+	import { contract, provider } from '$fc-stores/contract.store';
+	import { Card } from '$fc-types';
+	import { onMount } from 'svelte';
 
 	let card: Card;
 	let selectedCategory = '';
+	let cardsByCategory = new Map();
 
 	let showCard = false;
 
-	function next() {
+	onMount(async () => {
+		const address = await $provider?.getSigner().getAddress();
+		console.log(address);
+		const myCards = await $contract?.getCardsByOwner(address);
+		console.log(myCards);
+
+		for (const dataCard of myCards) {
+			const card = new Card(dataCard);
+
+			if (cardsByCategory.get(card.category)) {
+				cardsByCategory.set(card.category, {
+					cards: [...cardsByCategory.get(card.category).cards, card]
+				});
+			} else {
+				console.log('searching', card.category);
+				// const imageResp = await fetch(
+				// 	`https://api.unsplash.com/search/photos?page=1&query=${card.category}&per_page=1`,
+				// 	{
+				// 		method: 'GET',
+				// 		headers: {
+				// 			Authorization: `Client-ID ${apiToken}`
+				// 		}
+				// 	}
+				// );
+				// const imageResult = await imageResp.json();
+				cardsByCategory.set(card.category, {
+					cards: [card]
+					// imageUrl: imageResult.results[0].urls?.regular
+				});
+			}
+		}
+
+		console.log(cardsByCategory);
+	});
+
+	async function next() {
 		showCard = false;
-		card =
-			data.cards[selectedCategory][Math.floor(Math.random() * data.cards[selectedCategory].length)];
-		console.log(card);
+		// card =
+		// 	cardsByCategory[selectedCategory][
+		// 		Math.floor(Math.random() * cardsByCategory[selectedCategory].length)
+		// 	];
 	}
 
 	function reveal() {
@@ -24,39 +60,34 @@
 		selectedCategory = category;
 		next();
 	}
-
-	// async function test(category: string) {
-	// 	const test = await fetch('https://api.replicate.com/v1/predictions', {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			Authorization: `Token ${apiToken}`,
-	// 			'Content-Type': 'application/json'
-	// 		},
-	// 		body: JSON.stringify({
-	// 			version: '6359a0cab3ca6e4d3320c33d79096161208e9024d174b2311e5a21b6c7e1131c',
-	// 			input: {
-	// 				prompt: category
-	// 			}
-	// 		})
-	// 	});
-	// 	console.log(test);
-	// }
 </script>
 
-<div class="grid grid-cols-4 gap-4">
-	{#each Object.entries(data.cards) as [category]}
-		<div class="card bg-base-100 shadow-xl image-full">
-			<figure><img src="https://placeimg.com/400/225/arch" alt={category} /></figure>
-			<div class="card-body">
-				<h2 class="card-title">{category}</h2>
-				<div class="card-actions w-full">
-					<button class="btn btn-primary" on:click={() => setCategory(category)}>{category}</button>
-					<!-- <button class="btn btn-primary" on:click={() => test(category)}>{category}</button> -->
+{#if cardsByCategory.size > 0}
+	<div class="grid grid-cols-4 gap-4">
+		{#each Object.entries(cardsByCategory) as [category, value]}
+			<div class="card bg-base-100 shadow-xl image-full">
+				<figure><img src={value.imageUrl} alt={category} /></figure>
+				<div class="card-body">
+					<h2 class="card-title">{category}</h2>
+					<div class="card-actions w-full">
+						<button class="btn btn-primary" on:click={() => setCategory(category)}
+							>{category}</button
+						>
+					</div>
 				</div>
 			</div>
+		{/each}
+	</div>
+{:else}
+	<div class="card bg-base-100 shadow-xl">
+		<div class="card-body">
+			<h2 class="card-title">No Cards Found</h2>
+			<p>
+				There are no cards for this account. Navigate <a href="/add">here</a> to add your first card.
+			</p>
 		</div>
-	{/each}
-</div>
+	</div>
+{/if}
 
 {#if card}
 	<div class="card w-96 bg-base-100 shadow-xl">
