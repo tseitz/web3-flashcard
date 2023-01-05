@@ -17,7 +17,7 @@ export const contract = derived(provider, (values, set: Subscriber<ethers.Contra
 		console.log('setting contract', values);
 		set(
 			new ethers.Contract(
-				'0x5FbDB2315678afecb367f032d93F642f64180aa3',
+				'0x6915d0d999f13F7799fF709090038946451344f3',
 				JSON.stringify(flashCard),
 				values.getSigner()
 			)

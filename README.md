@@ -18,6 +18,9 @@ Deploy FlashCard contract
 
 `forge create FlashCard --private-key [private key from local node]`
 
+To Mumbai Testnet
+`forge create FlashCard --rpc-url $ALCHEMY_MUMBAI_URL --private-key $ETH_WALLET_PRIVATE_KEY`
+
 Paste contract address into +layout.svelte
 
 `defaultEvmStores.attachContract(
