@@ -5,15 +5,16 @@
 
 	let card: Card;
 	let selectedCategory = '';
-	let cardsByCategory = new Map();
+	let cardsByCategory: Map<string, any>;
 
 	let showCard = false;
 
 	onMount(async () => {
 		const address = await $provider?.getSigner().getAddress();
-		console.log(address);
 		const myCards = await $contract?.getCardsByOwner(address);
-		console.log(myCards);
+		cardsByCategory = new Map();
+
+		const apiToken = '0euhr1uucaIF5hR0Y49I6hz7rHgWDQcKHQZLX6I7RK0';
 
 		for (const dataCard of myCards) {
 			const card = new Card(dataCard);
@@ -35,8 +36,10 @@
 				// );
 				// const imageResult = await imageResp.json();
 				cardsByCategory.set(card.category, {
-					cards: [card]
-					// imageUrl: imageResult.results[0].urls?.regular
+					cards: [card],
+					imageUrl:
+						'https://images.unsplash.com/photo-1599474857723-b166d634dcb3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzOTQzMTN8MHwxfHNlYXJjaHwxfHxTdWJ3b29mZXJ8ZW58MHx8fHwxNjcyODc2OTMx&ixlib=rb-4.0.3&q=80&w=1080'
+					// imageResult.results[0].urls?.regular
 				});
 			}
 		}
@@ -46,10 +49,8 @@
 
 	async function next() {
 		showCard = false;
-		// card =
-		// 	cardsByCategory[selectedCategory][
-		// 		Math.floor(Math.random() * cardsByCategory[selectedCategory].length)
-		// 	];
+		const cards = cardsByCategory.get(selectedCategory).cards;
+		card = cards[Math.floor(Math.random() * cards.length)];
 	}
 
 	function reveal() {
@@ -62,17 +63,15 @@
 	}
 </script>
 
-{#if cardsByCategory.size > 0}
+{#if cardsByCategory && cardsByCategory.size > 0}
 	<div class="grid grid-cols-4 gap-4">
-		{#each Object.entries(cardsByCategory) as [category, value]}
+		{#each [...cardsByCategory] as [category, value]}
 			<div class="card bg-base-100 shadow-xl image-full">
 				<figure><img src={value.imageUrl} alt={category} /></figure>
 				<div class="card-body">
 					<h2 class="card-title">{category}</h2>
 					<div class="card-actions w-full">
-						<button class="btn btn-primary" on:click={() => setCategory(category)}
-							>{category}</button
-						>
+						<button class="btn btn-primary" on:click={() => setCategory(category)}>Study</button>
 					</div>
 				</div>
 			</div>
