@@ -14,8 +14,6 @@
 		const myCards = await $contract?.getCardsByOwner(address);
 		cardsByCategory = new Map();
 
-		const apiToken = '0euhr1uucaIF5hR0Y49I6hz7rHgWDQcKHQZLX6I7RK0';
-
 		for (const dataCard of myCards) {
 			const card = new Card(dataCard);
 
