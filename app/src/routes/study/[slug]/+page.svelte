@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AddCardForm from '$fc-root/lib/AddCardForm.svelte';
 	import { contract, provider } from '$fc-stores/contract.store';
 	import { Card } from '$fc-types';
 	import { onMount } from 'svelte';
@@ -8,6 +9,7 @@
 	let cardsByCategory: Map<string, any>;
 
 	let showCard = false;
+	let showEdit = false;
 
 	onMount(async () => {
 		const address = await $provider?.getSigner().getAddress();
@@ -52,7 +54,18 @@
 	}
 
 	function reveal() {
+		showEdit = false;
 		showCard = true;
+	}
+
+	function hide() {
+		showEdit = false;
+		showCard = false;
+	}
+
+	function edit() {
+		console.log(showEdit);
+		showEdit = true;
 	}
 
 	function setCategory(category: string) {
@@ -89,12 +102,21 @@
 {#if card}
 	<div class="card w-96 bg-base-100 shadow-xl">
 		<div class="card-body">
-			<h2 class="card-title">{card.prompt}</h2>
-			<p class={showCard ? 'reveal' : 'hide'}>{card.answer}</p>
-			<div class="card-actions justify-end">
-				<button class="btn btn-primary" on:click={() => reveal()}>Reveal</button>
-				<button class="btn btn-primary" on:click={() => next()}>Next</button>
-			</div>
+			{#if !showEdit}
+				<h2 class="card-title">{card.prompt}</h2>
+				<p class={showCard ? 'reveal' : 'hide'}>{card.answer}</p>
+				<div class="card-actions justify-end">
+					<button class="btn btn-primary" on:click={() => edit()}>Edit</button>
+					{#if showCard}
+						<button class="btn btn-primary" on:click={() => hide()}>Hide</button>
+					{:else}
+						<button class="btn btn-primary" on:click={() => reveal()}>Reveal</button>
+					{/if}
+					<button class="btn btn-primary" on:click={() => next()}>Next</button>
+				</div>
+			{:else}
+				<AddCardForm {card} back={() => hide()} />
+			{/if}
 		</div>
 	</div>
 {/if}

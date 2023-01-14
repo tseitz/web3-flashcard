@@ -12,6 +12,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Web3 Flashcard</title>
+</svelte:head>
+
 <Header />
 
 <div class="container mx-auto p-4">

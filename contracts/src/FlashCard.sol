@@ -38,6 +38,24 @@ contract FlashCard {
         emit FlashCardCreated(id, _category, _prompt, _answer);
     }
 
+    // function editCard(
+    //     uint256 _id,
+    //     string memory _category,
+    //     string memory _prompt,
+    //     string memory _answer
+    // ) public {
+    //     uint256 id = cards[msg.sender].length;
+    //     Card memory myCard = Card({
+    //         id: id,
+    //         category: _category,
+    //         prompt: _prompt,
+    //         answer: _answer
+    //     });
+    //     cards[msg.sender].push(myCard);
+
+    //     emit FlashCardCreated(id, _category, _prompt, _answer);
+    // }
+
     function getCardsByOwner(address _owner)
         external
         view
