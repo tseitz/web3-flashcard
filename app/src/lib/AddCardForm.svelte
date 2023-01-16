@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Card } from '$fc-root/types';
 	import { contract } from '$fc-stores/contract.store';
+	import { onMount } from 'svelte';
 
 	export let card: Card | undefined = undefined;
 	export let back: () => void = () => {};

@@ -2,6 +2,7 @@
 pragma solidity ^0.8.13;
 
 contract FlashCard {
+    /// @notice Dispatched when Flash Card is created
     event FlashCardCreated(
         uint256 id,
         string category,
@@ -9,9 +10,11 @@ contract FlashCard {
         string answer
     );
 
+    /// @notice currently not in use, will analyze how I want to use this
     mapping(uint256 => address) public cardToOwner;
     mapping(address => uint256) ownerCardCount;
 
+    /// @notice struct for flash card
     struct Card {
         uint256 id;
         string category;
@@ -19,8 +22,14 @@ contract FlashCard {
         string answer;
     }
 
+    /// @notice mapping of address to array of cards
     mapping(address => Card[]) public cards;
 
+    /// @notice function to create a flash card. Emits FlashCardCreated event
+    /// @param _category string of category
+    /// @param _prompt string of prompt
+    /// @param _answer string of answer
+    /// @dev generates id by getting length of array of cards for msg.sender and pushes to senders cards
     function saveCard(
         string memory _category,
         string memory _prompt,
