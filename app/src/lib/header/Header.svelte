@@ -11,6 +11,17 @@
 		if (window.ethereum) {
 			console.log('window.ethereum found. connecting...');
 			await connect();
+
+			window.ethereum.on('accountsChanged', async (accounts) => {
+				console.log(accounts);
+				if (accounts.length > 0) {
+					await connect();
+				}
+			});
+
+			window.ethereum.on('chainChanged', async () => {
+				await connect();
+			});
 		}
 	});
 
